@@ -1,0 +1,106 @@
+<!doctype html>
+
+<body>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            setInterval(mainloop, 1000 / 50);
+        }
+        
+        //ball vars
+
+        var xPos = 0;
+        var yPos = 0;
+        const SIZE = 20;
+        var xSpeed = 5;
+        var ySpeed = 5;
+        
+        var balls = [];
+        var settingUp = true;
+        
+
+        function mainloop() {
+            colorRect(0, 0, canvas.width, canvas.height, 'black');
+            colorRect(xPos, yPos, SIZE, SIZE, 'red');
+        
+            if(settingUp){
+                setUp();
+                settingUp = false;
+            }
+        
+            ballMove();
+            // end func
+        }
+        
+        function setUp(){
+            var ballxSpeed =  Math.floor(Math.random()*(20 - 2)) + 2; 
+            var ballySpeed =  Math.floor(Math.random()*(20 - 2)) + 2; 
+            var ballSize =  Math.floor(Math.random()*(100 - 10) + 10); 
+            var ballxPos =   Math.floor(Math.random()*(canvas.width - ballSize) - 0) + 0;
+            var ballxPos =   Math.floor(Math.random()*(canvas.height - ballSize) - 0) + 0;
+            
+            var ball = {
+                ballxPos: ballxPos,
+                ballyPos: ballyPos,
+                ballSize: ballSize,
+                ballxSpeed: ballxSpeed,
+                ballySpeed: ballySpeed,
+                
+            }
+            balls.push(ball);
+            //end func
+        }
+        
+        function ballMove(){
+            xPos += xSpeed;
+            yPos += ySpeed;
+            
+            if(xPos > canvas.width - SIZE){
+                xSpeed *= -1;
+            }
+            
+            if(xPos < 0){
+               xSpeed *= -1;
+            }
+            
+            if(yPos > canvas.width - SIZE){
+                ySpeed *= -1;
+            }
+            
+            if(yPos < 0){
+               ySpeed *= -1;
+            }
+//end func
+        }
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+            // end func
+        }
+
+    </script>
+</body>
+<html>
+
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+
+<body></body>
+<script type="text/javascript">
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Error";
+    }
+
+</script>
+
+</html>
