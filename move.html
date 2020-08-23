@@ -1,0 +1,129 @@
+<!doctype html>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            setInterval(mainloop, 1000 / 50);
+        }
+        
+        // ball vars 
+        var xPos = 0;
+        var yPos = 0;
+        const SIZE = 20;
+        var xSpeed = 5;
+        var ySpeed = 5;
+        
+        var balls = [];
+        var settingUp = true;
+        var totalBalls = 30;
+        
+        function mainloop() {
+            colorRect(0,0,canvas.width,canvas.height,'black'); // bg
+            colorRect(xPos,yPos,SIZE,SIZE,'red'); 
+            
+            if(settingUp){
+                for(var i = 0; i < totalBalls; i++){
+                setUp();
+            }
+                settingUp = false; 
+        }
+            moveBalls();
+            drawBalls();
+            ballMove();
+        }// end func 
+        
+        function setUp(){
+            var ballSize = Math.floor(Math.random()*(100 - 10)) + 10;
+            var ballXpos = Math.floor(Math.random()*((canvas.width - ballSize) - 0)) + 0;
+            var ballYpos = Math.floor(Math.random()*((canvas.height - ballSize) - 0)) + 0;
+            var ballXspeed = Math.floor(Math.random()*(20 - 2)) + 2;
+            var ballYspeed = Math.floor(Math.random()*(20 - 2)) + 2;
+            
+            var ball = {
+                ballXpos: ballXpos,
+                ballYpos: ballYpos,
+                ballSize: ballSize,
+                ballXspeed: ballXspeed,
+                ballYspeed: ballYspeed
+            }
+            
+            balls.push(ball);
+            
+        } // end func
+        
+        
+        function drawBalls(){
+            balls.forEach(function(ball,i){
+                colorRect(ball.ballXpos,ball.ballYpos,ball.ballSize,ball.ballSize,'lime');
+            });
+        }
+        
+        function moveBalls(){
+            balls.forEach(function(ball,i){
+                ball.ballXpos += ball.ballXspeed;
+                ball.ballYpos += ball.ballYspeed;
+                
+                //right edge bounce
+                if(ball.ballXpos + ball.ballSize > canvas.width){
+                    ball.ballXspeed *= -1;
+                }      
+                
+                if(ball.ballXpos < 0){
+                    ball.ballXspeed *= -1;
+                }  
+                
+                if(ball.ballYpos  > canvas.height){
+                    ball.ballYpos = 0 - ball.ballSize;
+                    ball.ballSize = Math.floor(Math.random()*(100 - 10)) + 10;
+                    ball.ballXspeed = Math.floor(Math.random()*(20 - 2)) + 2;
+                    ball.ballYspeed = Math.floor(Math.random()*(20 - 2)) + 2;
+                }
+                
+            });
+        }
+        
+        function ballMove(){
+            xPos += xSpeed; // x move
+            yPos += ySpeed; // y move
+            
+            // right edge bounce
+            if(xPos > canvas.width - SIZE){
+               xSpeed *= -1;
+            }
+            // left edge bounce
+            if(xPos < 0){
+               xSpeed *= -1;
+            }
+            // bottom edge bounce
+            if(yPos > canvas.height - SIZE){
+               ySpeed *= -1;
+            }
+            // top edge bounce 
+            if(yPos < 0){
+               ySpeed *= -1;
+            }
+        } // end func 
+        
+         function colorRect(x,y,w,h,c){
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x,y,w,h);
+        } // end func
+    
+    </script>
+</body>
+
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>
